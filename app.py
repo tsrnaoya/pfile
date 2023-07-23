@@ -69,10 +69,51 @@ def register_exe():
     else:
         error = '登録に失敗しました。'
     return render_template('register.html', error=error)
+    
+@app.route('/list')
+def list():
+    shop_list = db.select_all_shops()
+    return render_template('list.html', shops=shop_list)
+
+@app.route('/shop_register')
+def shop_register():
+    return render_template('shop_register.html')
+
+@app.route('/shop_register_exe', methods=['POST'])
+def shop_register_exe():
+    shops_name = request.form.get('shops_name')
+    company = request.form.get('company')
+    price = request.form.get('price')
+    stock = request.form.get('stock')
+    if shops_name == '':
+        error = '商品名が入力されてません。'
+        return render_template('shop_register.html', error=error)
+    if company == '':
+        error = '会社名が入力されてません。'
+        return render_template('shop_register.html', error=error)
+    if price == '':
+        error = '価格が入力されてません。'
+        return render_template('shop_register.html', error=error)
+    if stock == '':
+        error = '在庫が入力されてません。'
+        return render_template('shop_register.html', error=error)
+    count = db.insert_shops(shops_name, company, price, stock)
+    if count == 1:
+        msg = '登録が完了しました。'
+        return redirect(url_for('shop_register', msg=msg))
+    else:
+        error = '登録に失敗しました。'
+        print()
+        return render_template('register.html', error=error)
+
+    
+@app.route('/search_shops_exe', methods=['POST'])
+def search_shops_exe():
+    name = request.form.get('name')
+    shop_list = db.search_shops(name)
+    return render_template('list.html', shops=shop_list)
 
 
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)

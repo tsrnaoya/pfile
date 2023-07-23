@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>登録</h1>
+  <form action="{{url_for('shop_register_exe')}}" method="post">
+    商品名：<input type="text" name="shops_name"><br>
+    会社名：<input type="text" name="company"><br>
+    値段：<input type="text" name="price"><br>
+    在庫:<input type="text" name="stock">
+    <button type="submit">登録</button>
+  </form>
+</body>
+</html>

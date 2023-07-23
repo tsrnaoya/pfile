@@ -61,5 +61,40 @@ def login(user_name, password):
     finally :
         cursor.close()
         connection.close()
-    
+        
     return flg
+
+def select_all_shops():
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = 'SELECT id, name, company, price, stock FROM shops'
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return rows
+
+def search_shops(key):
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = 'SELECT id, name, company, price, stock FROM shops WHERE name LIKE %s'
+    key = '%' + key + '%'
+    cursor.execute(sql, (key,))
+    rows = cursor.fetchall()
+    return rows
+
+def insert_shops(shops_name, company, price, stock):
+    sql = 'INSERT INTO shops VALUES (default, %s, %s, %s, %s)'
+    try :
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (shops_name, company, price, stock))
+        count = cursor.rowcount # 更新内容を取得
+        connection.commit()
+    except psycopg2.DatabaseError:
+        count = 0
+    finally:
+        cursor.close()
+        connection.close()
+    return count
+
