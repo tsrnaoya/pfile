@@ -98,3 +98,25 @@ def insert_shops(shops_name, company, price, stock):
         connection.close()
     return count
 
+def shop(id):
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = 'UPDATE shops SET stock = stock - 1 WHERE id=%s;'
+    cursor.execute(sql,(id,))
+    count = cursor.rowcount
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return count
+
+def shop_delete(id):
+    connection = get_connection()
+    connection.cursor()
+    cursor = connection.cursor()
+    sql = 'DELETE FROM shops WHERE id = %s'
+    cursor.execute(sql,(id))
+    count = cursor.rowcount
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return count

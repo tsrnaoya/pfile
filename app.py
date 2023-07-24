@@ -113,7 +113,36 @@ def search_shops_exe():
     shop_list = db.search_shops(name)
     return render_template('list.html', shops=shop_list)
 
+@app.route('/shop', methods=['POST'])
+def shop():
+    id = request.form.get('id')
+    
+    db.shop(id)
+    
+    return render_template('shop_success.html')
 
+
+@app.route('/shop_delete', methods=['POST'])
+def shop_delete():
+    id = request.form.get('id')
+    
+    db.shop_delete(id)
+    
+    return render_template('shop_delete_success.html')
+
+@app.route('/topmenuback')
+def topmenuback():
+    shop_list = db.select_all_shops()
+    return render_template('list.html', shops=shop_list)
+  
+
+@app.route('/shopdelete')
+def shopdelete():
+    return render_template('shop_delete.html')
+
+@app.route('/loginback')
+def loginback():
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

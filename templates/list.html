@@ -33,5 +33,9 @@
         {% endfor %}
     </tbody>
   </table>
+  <form action="{{url_for('shop')}}" method="post">
+    ID:<input type="text" name="id"placeholder="IDを入力して購入"><br>
+    <button type="submit">購入</button>
+    </form>
 </body>
 </html>
